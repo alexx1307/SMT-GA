@@ -1,0 +1,46 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <bean name="testProblem" class="com.aleksiejew.lukasz.Model.Problem">
+        <property name="terminals">
+            <list>
+                <bean class="com.aleksiejew.lukasz.Model.Point">
+                    <constructor-arg index="0" value="0"/>
+                    <constructor-arg index="1" value="0"/>
+                </bean>
+                <bean class="com.aleksiejew.lukasz.Model.Point">
+                    <constructor-arg index="0" value="1"/>
+                    <constructor-arg index="1" value="0"/>
+                </bean>
+                <bean class="com.aleksiejew.lukasz.Model.Point">
+                    <constructor-arg index="0" value="0"/>
+                    <constructor-arg index="1" value="1"/>
+                </bean>
+                <bean class="com.aleksiejew.lukasz.Model.Point">
+                    <constructor-arg index="0" value="1"/>
+                    <constructor-arg index="1" value="1"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean name="geneticAlgorithm" class="com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm">
+        <property name="algorithmParameters" ref="parameters" />
+        <property name="solutionGenerator" ref="solutionGenerator" />
+        <property name="resultEvaluator" ref="simpleSpanningTreeEvaluator" />
+        <property name="metrics" ref="euclideanMetrics" />
+    </bean>
+
+    <bean name="parameters" class="com.aleksiejew.lukasz.Algorithm.AlgorithmParameters" >
+        <property name="populationSize" value="3" />
+        <property name="defaultSteinerPointsNumber" value="2" />
+    </bean>
+
+    <bean name="euclideanMetrics" class="com.aleksiejew.lukasz.Algorithm.EuclideanMetrics" />
+    <bean name="solutionGenerator" class="com.aleksiejew.lukasz.Generators.SimpleRandomSolutionGenerator" />
+    <bean name="simpleSpanningTreeEvaluator" class="com.aleksiejew.lukasz.Algorithm.MST.SimpleSpanningTreeEvaluator" />
+</beans>
