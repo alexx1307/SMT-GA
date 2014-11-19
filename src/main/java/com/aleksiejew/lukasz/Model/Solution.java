@@ -33,6 +33,7 @@ public class Solution implements Comparable<Solution> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{\n");
+        stringBuilder.append("RESULT = "+evaluatedResult+"\n");
         for (Point point : steinerPoints) {
             stringBuilder.append("\t" + point.toString() + "\n");
         }
@@ -42,6 +43,9 @@ public class Solution implements Comparable<Solution> {
 
     @Override
     public int compareTo(Solution o) {
-        return Double.compare(getEvaluatedResult(), o.getEvaluatedResult());
+        int comparisonResult = Double.compare(getEvaluatedResult(), o.getEvaluatedResult());
+        if(comparisonResult!=0 )
+            return comparisonResult;
+        return Integer.compare(this.hashCode(),o.hashCode());
     }
 }

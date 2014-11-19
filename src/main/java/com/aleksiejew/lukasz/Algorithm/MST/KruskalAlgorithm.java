@@ -49,6 +49,6 @@ public class KruskalAlgorithm {
 
 
     private boolean isEdgeConnectingTwoSeparateTrees(Edge edge) {
-        return forest.connected(edge.p1,edge.p2);
+        return !forest.connected(edge.p1,edge.p2);
     }
 }

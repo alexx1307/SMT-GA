@@ -18,7 +18,8 @@ public class Edge  implements Comparable<Edge>{
 
 
     @Override
-    public int compareTo(Edge other) {
-        return Double.compare(dist,other.dist);
+    public int compareTo(Edge o) {
+        int comparisonResult = Double.compare(dist, o.dist);
+        return comparisonResult != 0?comparisonResult: Integer.compare(this.hashCode(), o.hashCode());
     }
 }
