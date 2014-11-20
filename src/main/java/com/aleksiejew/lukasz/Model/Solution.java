@@ -10,6 +10,7 @@ import java.util.List;
 public class Solution implements Comparable<Solution> {
     private List<Point> steinerPoints;
     private Double evaluatedResult;
+
     private GeneticAlgorithm geneticAlgorithm;
 
     public Solution(List<Point> steinerPoints, GeneticAlgorithm geneticAlgorithm) {
@@ -21,6 +22,10 @@ public class Solution implements Comparable<Solution> {
         return steinerPoints;
     }
 
+
+    public GeneticAlgorithm getGeneticAlgorithm() {
+        return geneticAlgorithm;
+    }
 
     public double getEvaluatedResult() {
         if (evaluatedResult != null)

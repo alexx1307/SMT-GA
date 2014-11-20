@@ -29,18 +29,23 @@
     </bean>
 
     <bean name="geneticAlgorithm" class="com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm">
-        <property name="algorithmParameters" ref="parameters" />
-        <property name="solutionGenerator" ref="solutionGenerator" />
-        <property name="resultEvaluator" ref="simpleSpanningTreeEvaluator" />
-        <property name="metrics" ref="euclideanMetrics" />
+        <property name="algorithmParameters" ref="parameters"/>
+        <property name="solutionGenerator" ref="solutionGenerator"/>
+        <property name="resultEvaluator" ref="simpleSpanningTreeEvaluator"/>
+        <property name="metrics" ref="euclideanMetrics"/>
+        <property name="stopCriterion" ref="maxIterationStopCriterion"/>
     </bean>
 
-    <bean name="parameters" class="com.aleksiejew.lukasz.Algorithm.AlgorithmParameters" >
-        <property name="populationSize" value="3" />
-        <property name="defaultSteinerPointsNumber" value="2" />
+    <bean name="parameters" class="com.aleksiejew.lukasz.Algorithm.AlgorithmParameters">
+        <property name="populationSize" value="3"/>
+        <property name="defaultSteinerPointsNumber" value="2"/>
     </bean>
 
-    <bean name="euclideanMetrics" class="com.aleksiejew.lukasz.Algorithm.EuclideanMetrics" />
-    <bean name="solutionGenerator" class="com.aleksiejew.lukasz.Generators.SimpleRandomSolutionGenerator" />
-    <bean name="simpleSpanningTreeEvaluator" class="com.aleksiejew.lukasz.Algorithm.MST.SimpleSpanningTreeEvaluator" />
+    <bean name="euclideanMetrics" class="com.aleksiejew.lukasz.Algorithm.EuclideanMetrics"/>
+    <bean name="solutionGenerator" class="com.aleksiejew.lukasz.Generators.SimpleRandomSolutionGenerator"/>
+    <bean name="simpleSpanningTreeEvaluator" class="com.aleksiejew.lukasz.Algorithm.MST.SimpleSpanningTreeEvaluator"/>
+    <bean name="maxIterationStopCriterion"
+          class="com.aleksiejew.lukasz.Algorithm.Criterions.MaxIterationNumberCriterion">
+        <property name="maxIterationNumber" value="100" />
+    </bean>
 </beans>

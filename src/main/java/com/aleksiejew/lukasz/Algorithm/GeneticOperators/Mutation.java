@@ -1,4 +1,4 @@
-package com.aleksiejew.lukasz.Algorithm;
+package com.aleksiejew.lukasz.Algorithm.GeneticOperators;
 
 /**
  * Created by Luka on 2014-10-31.
