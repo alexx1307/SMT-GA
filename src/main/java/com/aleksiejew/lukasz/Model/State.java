@@ -7,9 +7,25 @@ import java.util.List;
  */
 public class State {
     private int iteration;
+    Population population;
+    Population newPopulation;
 
     public State() {
         this.population = new Population();
+        this.newPopulation = new Population();
+    }
+
+    public void swapPopulations(){
+        population = newPopulation;
+        newPopulation = new Population();
+    }
+
+    public Population getNewPopulation() {
+        return newPopulation;
+    }
+
+    public void setNewPopulation(Population newPopulation) {
+        this.newPopulation = newPopulation;
     }
 
     public Population getPopulation() {
@@ -20,7 +36,6 @@ public class State {
         this.population = population;
     }
 
-    Population population;
 
     public int getIteration() {
         return iteration;

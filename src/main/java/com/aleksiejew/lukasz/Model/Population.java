@@ -1,35 +1,33 @@
 package com.aleksiejew.lukasz.Model;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Luka on 2014-10-31.
  */
 public class Population {
-    private List<Solution> solutions;
+    private SortedSet<Solution> solutions;
 
-    public List<Solution> getSolutions() {
+    public SortedSet<Solution> getSolutions() {
         return solutions;
     }
 
-    public List<Solution> getSortedSolutions() {
-        Collections.sort(solutions);
-        return solutions;
-    }
 
     public Population() {
-        this.solutions = new LinkedList<Solution>();
+        this.solutions = new TreeSet<Solution>();
     }
 
     public void addNewSolution(Solution solution) {
         solutions.add(solution);
     }
 
-    public void setSolutions(List<Solution> solutions) {
+    public void setSolutions(SortedSet<Solution> solutions) {
         this.solutions = solutions;
     }
 
 
+    public Solution getBestSolution() {
+        System.out.println(solutions.size());
+        return solutions.first();
+    }
 }

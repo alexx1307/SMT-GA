@@ -4,9 +4,7 @@ import com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm;
 import com.aleksiejew.lukasz.Model.Point;
 import com.aleksiejew.lukasz.Model.Solution;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Luka on 2014-11-19.
@@ -16,7 +14,7 @@ public class SimpleRandomSolutionGenerator implements SolutionGenerator {
 
     @Override
     public Solution generateSolution(GeneticAlgorithm geneticAlgorithm) {
-        List<Point> points = new LinkedList<Point>();
+        SortedSet<Point> points = new TreeSet<Point>();
         for (int i = 0; i < geneticAlgorithm.getDefaultSolutionSize(); i++) {
             points.add(new Point(random.nextDouble(), random.nextDouble()));
         }

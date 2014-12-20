@@ -3,22 +3,23 @@ package com.aleksiejew.lukasz.Model;
 import com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm;
 
 import java.util.List;
+import java.util.SortedSet;
 
 /**
  * Created by Luka on 2014-10-31.
  */
 public class Solution implements Comparable<Solution> {
-    private List<Point> steinerPoints;
+    private SortedSet<Point> steinerPoints;
     private Double evaluatedResult;
 
     private GeneticAlgorithm geneticAlgorithm;
 
-    public Solution(List<Point> steinerPoints, GeneticAlgorithm geneticAlgorithm) {
+    public Solution(SortedSet<Point> steinerPoints, GeneticAlgorithm geneticAlgorithm) {
         this.steinerPoints = steinerPoints;
         this.geneticAlgorithm = geneticAlgorithm;
     }
 
-    public List<Point> getSteinerPoints() {
+    public SortedSet<Point> getSteinerPoints() {
         return steinerPoints;
     }
 
@@ -34,6 +35,9 @@ public class Solution implements Comparable<Solution> {
         return evaluatedResult;
     }
 
+    public void setEvaluatedResult(Double evaluatedResult){
+        this.evaluatedResult = evaluatedResult;
+    }
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -51,6 +55,8 @@ public class Solution implements Comparable<Solution> {
         int comparisonResult = Double.compare(getEvaluatedResult(), o.getEvaluatedResult());
         if(comparisonResult!=0 )
             return comparisonResult;
+        if(getSteinerPoints().equals(o.getSteinerPoints())==true)
+            return 0;
         return Integer.compare(this.hashCode(),o.hashCode());
     }
 }

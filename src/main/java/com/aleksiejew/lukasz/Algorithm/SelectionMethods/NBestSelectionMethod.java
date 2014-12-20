@@ -3,8 +3,7 @@ package com.aleksiejew.lukasz.Algorithm.SelectionMethods;
 import com.aleksiejew.lukasz.Model.Population;
 import com.aleksiejew.lukasz.Model.Solution;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
 
 /**
  * Created by Luka on 2014-11-20.
@@ -12,10 +11,17 @@ import java.util.List;
 public class NBestSelectionMethod implements SelectionMethod {
 
     @Override
-    public Population selectNextPopulation(Population population, int newPopulationSize) {
-        Population newPopulation = new Population();
-        List<Solution> sortedSolutions = new LinkedList<Solution>(population.getSortedSolutions());
-        newPopulation.setSolutions(sortedSolutions.subList(0, newPopulationSize > sortedSolutions.size() ? sortedSolutions.size() : newPopulationSize));
-        return newPopulation;
+    public Population selectNextPopulation(Population oldPopulation, Population newPopulation, int newPopulationSize) {
+        Population nextPopulation = new Population();
+        newPopulation.getSolutions().addAll(oldPopulation.getSolutions());
+        Iterator<Solution> iterator = newPopulation.getSolutions().iterator();
+
+        int i = 0;
+        while (iterator.hasNext() && i < newPopulationSize) {
+            nextPopulation.addNewSolution(iterator.next());
+            i++;
+        }
+
+        return nextPopulation;
     }
 }

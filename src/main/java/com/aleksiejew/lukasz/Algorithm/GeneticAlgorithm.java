@@ -7,8 +7,14 @@ import com.aleksiejew.lukasz.Algorithm.SelectionMethods.SelectionMethod;
 import com.aleksiejew.lukasz.Generators.SolutionGenerator;
 import com.aleksiejew.lukasz.Model.Population;
 import com.aleksiejew.lukasz.Model.Problem;
+import com.aleksiejew.lukasz.Model.Solution;
 import com.aleksiejew.lukasz.Model.State;
+import com.aleksiejew.lukasz.Tools.CommonTools;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Required;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Luka on 2014-10-31.
@@ -17,10 +23,10 @@ public class GeneticAlgorithm {
 
 
     private Problem problem;
+
     private Mutation[] mutations;
     private Crossover[] crossovers;
     private double[] mutationsProbability;
-    private double[] crossoversProbability;
     private State currentState = new State();
 
     private StopCriterion stopCriterion;
@@ -29,41 +35,71 @@ public class GeneticAlgorithm {
     private ResultEvaluator resultEvaluator;
     private Metrics metrics;
     private SelectionMethod selectionMethod;
+    private final double defaultMutationProbability = 0.05f;
+
+
+    private CrossoverSelectionStrategy crossoverSelectionStrategy;
 
 
     public void doIteration() {
+
         applyGeneticOperators();
+        System.out.println("after operators:"+currentState.getNewPopulation().getSolutions().size());
         makeSelection();
+        System.out.println("after selection:"+currentState.getNewPopulation().getSolutions().size());
+        currentState.swapPopulations();
     }
 
     public void doSimulation() {
         createFirstGeneration();
         do {
             doIteration();
+            currentState.setIteration(currentState.getIteration()+1);
+            System.out.println("best result is:"+currentState.getPopulation().getBestSolution().getEvaluatedResult());
         }
         while (!isStopCriterionFullfiled());
     }
 
     private void makeSelection() {
-        currentState.setPopulation(selectionMethod.selectNextPopulation(currentState.getPopulation(), getDefaultSolutionSize()));
+        currentState.setNewPopulation(selectionMethod.selectNextPopulation(currentState.getPopulation(), currentState.getNewPopulation(), getAlgorithmParameters().getPopulationSize()));
     }
 
     private void applyGeneticOperators() {
         applyCrossovers();
         applyMutations();
-    }
 
+    }
 
 
     private void applyCrossovers() {
-        for(int i=0;i<crossovers.length;i++){
-            double prob = crossoversProbability[i];
+        for (int i = 0; i < crossovers.length; i++) {
             Crossover crossover = crossovers[i];
+            List<Pair<Solution, Solution>> pairsToCross = crossoverSelectionStrategy.choosePairsToCross(currentState.getPopulation(), algorithmParameters.getPopulationSize());
+            for (Pair<Solution, Solution> pair : pairsToCross)
+                currentState.getNewPopulation().addNewSolution(crossover.cross(pair.getKey(), pair.getValue()));
         }
     }
 
-    private void applyMutations() {
+    private double getMutationProbability(int i) {
+        if (mutationsProbability != null && i < mutationsProbability.length)
+            return mutationsProbability[i];
+        return defaultMutationProbability;
     }
+
+
+    private void applyMutations() {
+        for (int i = 0; i < mutations.length; i++) {
+            Mutation mutation = mutations[i];
+            for (Solution solution : currentState.getPopulation().getSolutions()) {
+                double mutationProb = getMutationProbability(i);
+                if (CommonTools.passProbabilityTest(mutationProb)) {
+                    currentState.getNewPopulation().addNewSolution(mutation.mutate(solution));
+                    System.out.println("mutation applied");
+                }
+            }
+        }
+    }
+
     public void createFirstGeneration() {
         Population population = new Population();
         for (int i = 0; i < algorithmParameters.getPopulationSize(); i++) {
@@ -139,6 +175,30 @@ public class GeneticAlgorithm {
     @Required
     public void setStopCriterion(StopCriterion stopCriterion) {
         this.stopCriterion = stopCriterion;
+    }
+
+    @Required
+    public void setMutations(Mutation[] mutations) {
+        this.mutations = mutations;
+    }
+
+    @Required
+    public void setCrossovers(Crossover[] crossovers) {
+        this.crossovers = crossovers;
+    }
+
+    public void setMutationsProbability(double[] mutationsProbability) {
+        this.mutationsProbability = mutationsProbability;
+    }
+
+    @Required
+    public void setCrossoverSelectionStrategy(CrossoverSelectionStrategy crossoverSelectionStrategy) {
+        this.crossoverSelectionStrategy = crossoverSelectionStrategy;
+    }
+
+    @Required
+    public void setSelectionMethod(SelectionMethod selectionMethod) {
+        this.selectionMethod = selectionMethod;
     }
 
 }

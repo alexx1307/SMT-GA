@@ -20,13 +20,13 @@ public class App {
 
         GeneticAlgorithm algorithm = context.getBean(GeneticAlgorithm.class);
         algorithm.setProblem(testProblem);
-        algorithm.createFirstGeneration();
-        algorithm.doIteration();
+        //algorithm.createFirstGeneration();
+        algorithm.doSimulation();
 
         State currentState = algorithm.getCurrentState();
         Population population = currentState.getPopulation();
         int i = 1;
-        for (Solution solution : population.getSortedSolutions()) {
+        for (Solution solution : population.getSolutions()) {
             System.out.println("solution nr " + i + " = " + solution);
             i++;
         }

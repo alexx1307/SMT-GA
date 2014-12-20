@@ -19,7 +19,7 @@ public class MaxIterationNumberCriterion implements StopCriterion {
     @Override
     public boolean check(State state) {
         int current = state.getIteration();
-        return current<maxIterationNumber;
+        return current>maxIterationNumber;
     }
 
     public int getMaxIterationNumber() {

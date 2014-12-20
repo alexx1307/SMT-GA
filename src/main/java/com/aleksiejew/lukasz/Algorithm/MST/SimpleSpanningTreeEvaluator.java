@@ -8,13 +8,14 @@ import com.aleksiejew.lukasz.Model.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedSet;
 
 /**
  * Created by Luka on 2014-11-19.
  */
 public class SimpleSpanningTreeEvaluator implements ResultEvaluator {
     @Override
-    public double evaluate(GeneticAlgorithm geneticAlgorithm, List<Point> steinerPoints) {
+    public double evaluate(GeneticAlgorithm geneticAlgorithm, SortedSet<Point> steinerPoints) {
         ArrayList<Point> points = new ArrayList<Point>(steinerPoints);
         points.addAll(geneticAlgorithm.getProblem().getTerminals());
 

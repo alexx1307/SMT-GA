@@ -9,9 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
@@ -27,7 +25,7 @@ public class RandomHalfOnHalfCrossoverTest {
     static Point point22;
 
     @BeforeClass
-    public static void init(){
+    public static void init() {
         point11 = mock(Point.class);
         point21 = mock(Point.class);
         point22 = mock(Point.class);
@@ -35,20 +33,22 @@ public class RandomHalfOnHalfCrossoverTest {
         samePoint2 = mock(Point.class);
         commonPoint = mock(Point.class);
     }
+
     @Test
     public void testCross() throws Exception {
 
-
-        List<Point> list1 = new LinkedList<Point>(asList(point11, samePoint1));
-        List<Point> list2 = new LinkedList<Point>(asList(point21, point22));
+        SortedSet<Point> set1 = new TreeSet<Point>(asList(point11, samePoint1));
+        SortedSet<Point> set2 = new TreeSet<Point>(asList(point21, point22));
         GeneticAlgorithm geneticAlgorithm = mock(GeneticAlgorithm.class);
-        Solution solution1 = new Solution(list1, geneticAlgorithm);
-        Solution solution2 = new Solution(list2, geneticAlgorithm);
+        Solution solution1 = new Solution(set1, geneticAlgorithm);
+        Solution solution2 = new Solution(set2, geneticAlgorithm);
 
         Random random = mock(Random.class);
         stub(random.nextInt(2)).toReturn(0).toReturn(1);
 
         RandomHalfOnHalfCrossover crossover = new RandomHalfOnHalfCrossover();
+        crossover.setRandom(random);
+
         Solution result = crossover.cross(solution1, solution2);
 
         Assert.assertEquals(2, result.getSteinerPoints().size());
