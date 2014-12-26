@@ -1,7 +1,11 @@
 package com.aleksiejew.lukasz.Model;
 
 import com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm;
+import com.aleksiejew.lukasz.Algorithm.MST.Edge;
+import com.aleksiejew.lukasz.Algorithm.MST.EvaluationResult;
+import com.aleksiejew.lukasz.Algorithm.MST.ResolvedEdge;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -10,7 +14,7 @@ import java.util.SortedSet;
  */
 public class Solution implements Comparable<Solution> {
     private SortedSet<Point> steinerPoints;
-    private Double evaluatedResult;
+    private EvaluationResult evaluatedResult;
 
     private GeneticAlgorithm geneticAlgorithm;
 
@@ -28,21 +32,22 @@ public class Solution implements Comparable<Solution> {
         return geneticAlgorithm;
     }
 
-    public double getEvaluatedResult() {
+    public EvaluationResult getEvaluatedResult() {
         if (evaluatedResult != null)
             return evaluatedResult;
         evaluatedResult = geneticAlgorithm.getResultEvaluator().evaluate(geneticAlgorithm, steinerPoints);
         return evaluatedResult;
     }
 
-    public void setEvaluatedResult(Double evaluatedResult){
+    public void setEvaluatedResult(EvaluationResult evaluatedResult) {
         this.evaluatedResult = evaluatedResult;
     }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{\n");
-        stringBuilder.append("RESULT = "+evaluatedResult+"\n");
+        stringBuilder.append("RESULT = " + evaluatedResult.getCostValue() + "\n");
         for (Point point : steinerPoints) {
             stringBuilder.append("\t" + point.toString() + "\n");
         }
@@ -52,11 +57,21 @@ public class Solution implements Comparable<Solution> {
 
     @Override
     public int compareTo(Solution o) {
-        int comparisonResult = Double.compare(getEvaluatedResult(), o.getEvaluatedResult());
-        if(comparisonResult!=0 )
+        int comparisonResult = Double.compare(getEvaluatedResult().getCostValue(), o.getEvaluatedResult().getCostValue());
+        if (comparisonResult != 0)
             return comparisonResult;
-        if(getSteinerPoints().equals(o.getSteinerPoints())==true)
+        if (getSteinerPoints().equals(o.getSteinerPoints()) == true)
             return 0;
-        return Integer.compare(this.hashCode(),o.hashCode());
+        return Integer.compare(this.hashCode(), o.hashCode());
+    }
+
+    public List<Point> getConnectedPointsInSpanningTree(Point point) {
+        List<ResolvedEdge> spanningTree = evaluatedResult.getSpanningTree();
+        List<Point> connectedPoints = new LinkedList<Point>();
+        for (ResolvedEdge edge : spanningTree) {
+            if (edge.getP1().equals(point))
+                connectedPoints.add(edge.getP1());
+        }
+        return connectedPoints;
     }
 }

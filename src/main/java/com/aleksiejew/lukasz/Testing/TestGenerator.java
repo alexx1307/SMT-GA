@@ -5,10 +5,7 @@ import com.aleksiejew.lukasz.Algorithm.CompletelyRandomCrossoverSelectionStrateg
 import com.aleksiejew.lukasz.Algorithm.Criterions.MaxIterationNumberCriterion;
 import com.aleksiejew.lukasz.Algorithm.Criterions.StopCriterion;
 import com.aleksiejew.lukasz.Algorithm.CrossoverSelectionStrategy;
-import com.aleksiejew.lukasz.Algorithm.GeneticOperators.AddingRandomPointMutation;
-import com.aleksiejew.lukasz.Algorithm.GeneticOperators.Crossover;
-import com.aleksiejew.lukasz.Algorithm.GeneticOperators.Mutation;
-import com.aleksiejew.lukasz.Algorithm.GeneticOperators.RandomHalfOnHalfCrossover;
+import com.aleksiejew.lukasz.Algorithm.GeneticOperators.*;
 import com.aleksiejew.lukasz.Algorithm.SelectionMethods.NBestSelectionMethod;
 import com.aleksiejew.lukasz.Algorithm.SelectionMethods.SelectionMethod;
 import com.aleksiejew.lukasz.Generators.SimpleRandomSolutionGenerator;
@@ -44,9 +41,9 @@ public class TestGenerator {
         problem.setTerminals(terminals);
         StopCriterion[] stopCriterions = {new MaxIterationNumberCriterion(30), new MaxIterationNumberCriterion(100)};
         int[] populationNumbers = {10, 50, 200};
-        Mutation[][] mutations = {{new AddingRandomPointMutation()}};
+        Mutation[][] mutations = {{new AddingRandomPointMutation(), new TriangleOptimizationMutation()}};
         Crossover[][] crossovers = {{new RandomHalfOnHalfCrossover()}};
-        double[][] mutationsProbabilities = {{0.02f},{ 0.1f}};
+        double[][] mutationsProbabilities = {{0.02f,0.0f},{ 0.1f,0.0f},{ 0.0f,1.0f}};
 
         List<TestInstance> list = new LinkedList<TestInstance>();
 

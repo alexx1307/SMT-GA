@@ -12,7 +12,7 @@ public class Point implements Comparable<Point> {
     }
     @Override
     public String toString(){
-        return "("+x+","+y+")";
+        return ""+x+", "+y+"";
     }
 
 
@@ -22,5 +22,17 @@ public class Point implements Comparable<Point> {
         if(compare!=0)
             return compare;
         return Double.compare(y,o.y);
+    }
+
+    public Point add(Point other) {
+        return new Point(this.x+other.x,this.y+other.y);
+    }
+
+    public Point subtract(Point other) {
+        return new Point(this.x-other.x,this.y-other.y);
+    }
+
+    public Point multiply(double multiplier) {
+        return new Point(this.x*multiplier,this.y*multiplier);
     }
 }

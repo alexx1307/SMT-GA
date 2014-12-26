@@ -1,6 +1,7 @@
 package com.aleksiejew.lukasz.Algorithm.SelectionMethods;
 
 import com.aleksiejew.lukasz.Algorithm.GeneticAlgorithm;
+import com.aleksiejew.lukasz.Algorithm.MST.EvaluationResult;
 import com.aleksiejew.lukasz.Model.Point;
 import com.aleksiejew.lukasz.Model.Population;
 import com.aleksiejew.lukasz.Model.Solution;
@@ -29,13 +30,13 @@ public class NBestSelectionMethodTest {
         GeneticAlgorithm ga = mock(GeneticAlgorithm.class);
         SortedSet<Point> points = mock(SortedSet.class);
         solution1 = new Solution(points,ga);
-        solution1.setEvaluatedResult(1.0);
+        solution1.setEvaluatedResult(new EvaluationResult(null,1.0));
 
         solution2 = new Solution(points,ga);
-        solution2.setEvaluatedResult(2.0);
+        solution2.setEvaluatedResult(new EvaluationResult(null,2.0));
 
         solution3 = new Solution(points,ga);
-        solution3.setEvaluatedResult(3.0);
+        solution3.setEvaluatedResult(new EvaluationResult(null,3.0));
 
         SortedSet<Solution> solutions = new TreeSet<Solution>();
         solutions.add(solution1);

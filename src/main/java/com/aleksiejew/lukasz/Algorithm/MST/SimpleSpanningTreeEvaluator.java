@@ -15,14 +15,24 @@ import java.util.SortedSet;
  */
 public class SimpleSpanningTreeEvaluator implements ResultEvaluator {
     @Override
-    public double evaluate(GeneticAlgorithm geneticAlgorithm, SortedSet<Point> steinerPoints) {
+    public EvaluationResult evaluate(GeneticAlgorithm geneticAlgorithm, SortedSet<Point> steinerPoints) {
         ArrayList<Point> points = new ArrayList<Point>(steinerPoints);
         points.addAll(geneticAlgorithm.getProblem().getTerminals());
 
-        List<Edge> edges = createFullGraph(points,geneticAlgorithm.getMetrics());
+        List<Edge> edges = createFullGraph(points, geneticAlgorithm.getMetrics());
         KruskalAlgorithm minimalSpanningTreeProblem = new KruskalAlgorithm(points, edges);
         List<Edge> spanningTree = minimalSpanningTreeProblem.findMinimalSpanningTree();
-        return sumEdges(spanningTree);
+        List<ResolvedEdge> resolvedSpanningTree = resolve(spanningTree,points);
+        return new EvaluationResult(resolvedSpanningTree, sumEdges(spanningTree));
+    }
+
+    private List<ResolvedEdge> resolve(List<Edge> spanningTree, ArrayList<Point> points) {
+        List<ResolvedEdge> resolvedEdges= new LinkedList<ResolvedEdge>();
+        for (Edge edge : spanningTree) {
+            resolvedEdges.add(new ResolvedEdge(points.get(edge.p1), points.get(edge.p2)));
+        }
+
+        return resolvedEdges;
     }
 
     private double sumEdges(List<Edge> spanningTree) {
@@ -36,8 +46,8 @@ public class SimpleSpanningTreeEvaluator implements ResultEvaluator {
     List<Edge> createFullGraph(ArrayList<Point> pointsArray, Metrics metrics) {
         List<Edge> edges = new LinkedList<Edge>();
         for (int i = 0; i < pointsArray.size(); i++) {
-            for (int j = i+1; j < pointsArray.size(); j++) {
-                Edge e = new Edge(i,j,metrics.dist(pointsArray.get(i), pointsArray.get(j)));
+            for (int j = i + 1; j < pointsArray.size(); j++) {
+                Edge e = new Edge(i, j, metrics.dist(pointsArray.get(i), pointsArray.get(j)));
                 edges.add(e);
             }
         }
