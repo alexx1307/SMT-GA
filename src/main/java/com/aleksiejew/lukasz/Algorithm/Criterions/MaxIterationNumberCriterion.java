@@ -11,6 +11,10 @@ public class MaxIterationNumberCriterion implements StopCriterion {
 
     int maxIterationNumber;
 
+    public MaxIterationNumberCriterion(int maxIterationNumber) {
+        this.maxIterationNumber = maxIterationNumber;
+    }
+
     @Override
     public void init() {
 
@@ -20,15 +24,6 @@ public class MaxIterationNumberCriterion implements StopCriterion {
     public boolean check(State state) {
         int current = state.getIteration();
         return current>maxIterationNumber;
-    }
-
-    public int getMaxIterationNumber() {
-        return maxIterationNumber;
-    }
-
-    @Required
-    public void setMaxIterationNumber(int maxIterationNumber) {
-        this.maxIterationNumber = maxIterationNumber;
     }
 
 }

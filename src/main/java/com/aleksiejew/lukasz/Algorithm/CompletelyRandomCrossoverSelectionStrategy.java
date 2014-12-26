@@ -25,7 +25,7 @@ public class CompletelyRandomCrossoverSelectionStrategy implements CrossoverSele
             Solution solution2;
             do {
                 solution2 = solutions.get(random.nextInt(solutions.size()));
-            } while (!solution2.equals(solution1));
+            } while (solution2.equals(solution1));
 
             list.add(new Pair<Solution, Solution>(solution1, solution2));
         }

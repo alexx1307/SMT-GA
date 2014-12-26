@@ -36,9 +36,12 @@ public class RandomHalfOnHalfCrossover implements Crossover {
 
     private SortedSet<Point> chooseHalfRandomly(SortedSet<Point> steinerPoints) {
         int n = steinerPoints.size() / 2;
+        if(steinerPoints.size()%2!=0 && random.nextBoolean())
+            n++;
         ArrayList<Point> points = new ArrayList(steinerPoints);
         SortedSet<Point> newSteinerPoints = new TreeSet<Point>();
-        for (int i = 0; i < n; i++) {
+        //for (int i = 0; i < n; i++) {
+        while(newSteinerPoints.size()<n){
             newSteinerPoints.add(points.get(random.nextInt(steinerPoints.size())));
         }
 

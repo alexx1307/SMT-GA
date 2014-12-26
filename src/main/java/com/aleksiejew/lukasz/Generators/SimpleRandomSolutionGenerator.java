@@ -14,9 +14,12 @@ public class SimpleRandomSolutionGenerator implements SolutionGenerator {
 
     @Override
     public Solution generateSolution(GeneticAlgorithm geneticAlgorithm) {
+        double x,y;
+        x = geneticAlgorithm.getProblem().getxBorder();
+        y = geneticAlgorithm.getProblem().getyBorder();
         SortedSet<Point> points = new TreeSet<Point>();
         for (int i = 0; i < geneticAlgorithm.getDefaultSolutionSize(); i++) {
-            points.add(new Point(random.nextDouble(), random.nextDouble()));
+            points.add(new Point(random.nextDouble()*x, random.nextDouble()*y));
         }
         return new Solution(points, geneticAlgorithm);
     }

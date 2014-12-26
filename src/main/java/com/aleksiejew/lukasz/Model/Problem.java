@@ -40,4 +40,12 @@ public class Problem {
     }
 
 
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "xBorder=" + xBorder +
+                ", yBorder=" + yBorder +
+                ", terminals=" + terminals +
+                '}';
+    }
 }

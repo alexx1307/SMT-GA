@@ -20,33 +20,29 @@ import java.util.Random;
  * Created by Luka on 2014-10-31.
  */
 public class GeneticAlgorithm {
-
-
     private Problem problem;
-
-    private Mutation[] mutations;
-    private Crossover[] crossovers;
-    private double[] mutationsProbability;
     private State currentState = new State();
-
-    private StopCriterion stopCriterion;
     private AlgorithmParameters algorithmParameters;
-    private SolutionGenerator solutionGenerator;
     private ResultEvaluator resultEvaluator;
     private Metrics metrics;
-    private SelectionMethod selectionMethod;
     private final double defaultMutationProbability = 0.05f;
 
+    public GeneticAlgorithm(AlgorithmParameters algorithmParameters, Problem problem, ResultEvaluator resultEvaluator, Metrics metrics, SolutionGenerator solutionGenerator) {
+        this.algorithmParameters = algorithmParameters;
+        this.problem = problem;
+        this.resultEvaluator = resultEvaluator;
+        this.metrics = metrics;
+        this.solutionGenerator = solutionGenerator;
+    }
 
-    private CrossoverSelectionStrategy crossoverSelectionStrategy;
-
+    private SolutionGenerator solutionGenerator;
 
     public void doIteration() {
 
         applyGeneticOperators();
-        System.out.println("after operators:"+currentState.getNewPopulation().getSolutions().size());
+        //System.out.println("after operators:"+currentState.getNewPopulation().getSolutions().size());
         makeSelection();
-        System.out.println("after selection:"+currentState.getNewPopulation().getSolutions().size());
+        //System.out.println("after selection:"+currentState.getNewPopulation().getSolutions().size());
         currentState.swapPopulations();
     }
 
@@ -55,32 +51,34 @@ public class GeneticAlgorithm {
         do {
             doIteration();
             currentState.setIteration(currentState.getIteration()+1);
-            System.out.println("best result is:"+currentState.getPopulation().getBestSolution().getEvaluatedResult());
+            //System.out.println("best result is:"+currentState.getPopulation().getBestSolution().getEvaluatedResult());
         }
         while (!isStopCriterionFullfiled());
     }
 
     private void makeSelection() {
-        currentState.setNewPopulation(selectionMethod.selectNextPopulation(currentState.getPopulation(), currentState.getNewPopulation(), getAlgorithmParameters().getPopulationSize()));
+        currentState.setNewPopulation(algorithmParameters.getSelectionMethod().selectNextPopulation(currentState.getPopulation(), currentState.getNewPopulation(), getAlgorithmParameters().getPopulationSize()));
     }
 
     private void applyGeneticOperators() {
-        applyCrossovers();
         applyMutations();
+        applyCrossovers();
 
     }
 
 
     private void applyCrossovers() {
+        Crossover[] crossovers = algorithmParameters.getCrossovers();
         for (int i = 0; i < crossovers.length; i++) {
             Crossover crossover = crossovers[i];
-            List<Pair<Solution, Solution>> pairsToCross = crossoverSelectionStrategy.choosePairsToCross(currentState.getPopulation(), algorithmParameters.getPopulationSize());
+            List<Pair<Solution, Solution>> pairsToCross = algorithmParameters.getCrossoverSelectionStrategy().choosePairsToCross(currentState.getPopulation(), algorithmParameters.getPopulationSize());
             for (Pair<Solution, Solution> pair : pairsToCross)
                 currentState.getNewPopulation().addNewSolution(crossover.cross(pair.getKey(), pair.getValue()));
         }
     }
 
     private double getMutationProbability(int i) {
+        double[] mutationsProbability = algorithmParameters.getMutationsProbability();
         if (mutationsProbability != null && i < mutationsProbability.length)
             return mutationsProbability[i];
         return defaultMutationProbability;
@@ -88,13 +86,14 @@ public class GeneticAlgorithm {
 
 
     private void applyMutations() {
+        Mutation[] mutations = algorithmParameters.getMutations();
         for (int i = 0; i < mutations.length; i++) {
             Mutation mutation = mutations[i];
             for (Solution solution : currentState.getPopulation().getSolutions()) {
                 double mutationProb = getMutationProbability(i);
                 if (CommonTools.passProbabilityTest(mutationProb)) {
                     currentState.getNewPopulation().addNewSolution(mutation.mutate(solution));
-                    System.out.println("mutation applied");
+                    //System.out.println("mutation applied");
                 }
             }
         }
@@ -109,7 +108,7 @@ public class GeneticAlgorithm {
     }
 
     private boolean isStopCriterionFullfiled() {
-        return stopCriterion.check(currentState);
+        return algorithmParameters.getStopCriterion().check(currentState);
     }
 
     @Required
@@ -121,23 +120,12 @@ public class GeneticAlgorithm {
         return algorithmParameters;
     }
 
-
-    @Required
-    public void setSolutionGenerator(SolutionGenerator solutionGenerator) {
-        this.solutionGenerator = solutionGenerator;
-    }
-
-    public SolutionGenerator getSolutionGenerator() {
-        return solutionGenerator;
-    }
-
-
     public Problem getProblem() {
         return problem;
     }
 
     public int getDefaultSolutionSize() {
-        return algorithmParameters.getDefaultSteinerPointsNumber();//problem.getTerminals().size()-1;
+        return problem.getTerminals().size()-1; //algorithmParameters.getDefaultSteinerPointsNumber();
     }
 
     public ResultEvaluator getResultEvaluator() {
@@ -167,38 +155,7 @@ public class GeneticAlgorithm {
         return currentState;
     }
 
-
-    public StopCriterion getStopCriterion() {
-        return stopCriterion;
+    public SolutionGenerator getSolutionGenerator() {
+        return solutionGenerator;
     }
-
-    @Required
-    public void setStopCriterion(StopCriterion stopCriterion) {
-        this.stopCriterion = stopCriterion;
-    }
-
-    @Required
-    public void setMutations(Mutation[] mutations) {
-        this.mutations = mutations;
-    }
-
-    @Required
-    public void setCrossovers(Crossover[] crossovers) {
-        this.crossovers = crossovers;
-    }
-
-    public void setMutationsProbability(double[] mutationsProbability) {
-        this.mutationsProbability = mutationsProbability;
-    }
-
-    @Required
-    public void setCrossoverSelectionStrategy(CrossoverSelectionStrategy crossoverSelectionStrategy) {
-        this.crossoverSelectionStrategy = crossoverSelectionStrategy;
-    }
-
-    @Required
-    public void setSelectionMethod(SelectionMethod selectionMethod) {
-        this.selectionMethod = selectionMethod;
-    }
-
 }

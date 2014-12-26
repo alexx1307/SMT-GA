@@ -27,7 +27,7 @@ public class Population {
 
 
     public Solution getBestSolution() {
-        System.out.println(solutions.size());
+        //System.out.println(solutions.size());
         return solutions.first();
     }
 }
