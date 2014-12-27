@@ -11,10 +11,10 @@ import java.util.Iterator;
 public class NBestSelectionMethod implements SelectionMethod {
 
     @Override
-    public Population selectNextPopulation(Population oldPopulation, Population newPopulation, int newPopulationSize) {
+    public Population selectNextPopulation(Population oldPopulation, int newPopulationSize) {
         Population nextPopulation = new Population();
-        newPopulation.getSolutions().addAll(oldPopulation.getSolutions());
-        Iterator<Solution> iterator = newPopulation.getSolutions().iterator();
+
+        Iterator<Solution> iterator = oldPopulation.getSolutions().iterator();
 
         int i = 0;
         while (iterator.hasNext() && i < newPopulationSize) {

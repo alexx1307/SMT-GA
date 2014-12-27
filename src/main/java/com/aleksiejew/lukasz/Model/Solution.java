@@ -70,6 +70,8 @@ public class Solution implements Comparable<Solution> {
         List<Point> connectedPoints = new LinkedList<Point>();
         for (ResolvedEdge edge : spanningTree) {
             if (edge.getP1().equals(point))
+                connectedPoints.add(edge.getP2());
+            else if(edge.getP2().equals(point))
                 connectedPoints.add(edge.getP1());
         }
         return connectedPoints;

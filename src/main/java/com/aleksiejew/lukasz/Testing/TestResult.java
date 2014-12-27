@@ -22,7 +22,7 @@ public class TestResult {
             stringBuilder.append("solution nr " + i + " = " + solution+"\n");
             i++;
         }*/
-        Solution bestSolution = lastState.getPopulation().getBestSolution();
+        Solution bestSolution = lastState.getBestSolution();
         stringBuilder.append(bestSolution.toString()+"\n");
         return stringBuilder.toString();
     }

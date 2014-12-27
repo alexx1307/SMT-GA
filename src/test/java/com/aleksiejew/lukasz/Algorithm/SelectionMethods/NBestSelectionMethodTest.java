@@ -8,14 +8,10 @@ import com.aleksiejew.lukasz.Model.Solution;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class NBestSelectionMethodTest {
     private static Solution solution1;
@@ -53,7 +49,7 @@ public class NBestSelectionMethodTest {
 
         NBestSelectionMethod nBestSelectionMethod = new NBestSelectionMethod();
 
-        Population nextGen = nBestSelectionMethod.selectNextPopulation(firstPopulation,childrenPopulation,2);
+        Population nextGen = nBestSelectionMethod.selectNextPopulation(firstPopulation, 2);
 
         Assert.assertEquals(3,firstPopulation.getSolutions().size());
         Assert.assertEquals(2,nextGen.getSolutions().size());
@@ -67,7 +63,7 @@ public class NBestSelectionMethodTest {
     public void testSelectNextPopulationWithNBiggerThenPopulationSize() throws Exception {
         NBestSelectionMethod nBestSelectionMethod = new NBestSelectionMethod();
         childrenPopulation.setSolutions(new TreeSet<Solution>());
-        Population newPopulation = nBestSelectionMethod.selectNextPopulation(firstPopulation,childrenPopulation,4);
+        Population newPopulation = nBestSelectionMethod.selectNextPopulation(firstPopulation, 4);
 
         Assert.assertEquals(3,firstPopulation.getSolutions().size());
         Assert.assertEquals(3,newPopulation.getSolutions().size());

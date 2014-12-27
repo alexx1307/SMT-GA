@@ -38,10 +38,9 @@ public class GeneticAlgorithm {
     private SolutionGenerator solutionGenerator;
 
     public void doIteration() {
-
+        makeSelection();
         applyGeneticOperators();
         //System.out.println("after operators:"+currentState.getNewPopulation().getSolutions().size());
-        makeSelection();
         //System.out.println("after selection:"+currentState.getNewPopulation().getSolutions().size());
         currentState.swapPopulations();
     }
@@ -54,16 +53,16 @@ public class GeneticAlgorithm {
             //System.out.println("best result is:"+currentState.getPopulation().getBestSolution().getEvaluatedResult());
         }
         while (!isStopCriterionFullfiled());
+        currentState.updateBestSolution();
     }
 
     private void makeSelection() {
-        currentState.setNewPopulation(algorithmParameters.getSelectionMethod().selectNextPopulation(currentState.getPopulation(), currentState.getNewPopulation(), getAlgorithmParameters().getPopulationSize()));
+        currentState.setPopulation(algorithmParameters.getSelectionMethod().selectNextPopulation(currentState.getPopulation(), getAlgorithmParameters().getPopulationSize()));
     }
 
     private void applyGeneticOperators() {
-        applyMutations();
         applyCrossovers();
-
+        applyMutations();
     }
 
 

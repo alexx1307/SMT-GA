@@ -23,8 +23,9 @@ public class TriangleOptimizationMutation implements Mutation {
                         connectedPoints.get(1),
                         connectedPoints.get(2)));
             }
+            else if(connectedPoints.size()>3)
+                steinerPoints.add(point);
         }
-
         Solution newSolution = new Solution(steinerPoints,solution.getGeneticAlgorithm());
         return newSolution;
     }

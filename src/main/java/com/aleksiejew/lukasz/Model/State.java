@@ -9,6 +9,7 @@ public class State {
     private int iteration;
     Population population;
     Population newPopulation;
+    Solution bestSolution;
 
     public State() {
         this.population = new Population();
@@ -16,8 +17,14 @@ public class State {
     }
 
     public void swapPopulations(){
+        updateBestSolution();
         population = newPopulation;
         newPopulation = new Population();
+    }
+
+    public void updateBestSolution() {
+        if(bestSolution==null || bestSolution.getEvaluatedResult().getCostValue()>population.getBestSolution().getEvaluatedResult().getCostValue())
+            bestSolution = population.getBestSolution();
     }
 
     public Population getNewPopulation() {
@@ -43,5 +50,9 @@ public class State {
 
     public void setIteration(int iteration) {
         this.iteration = iteration;
+    }
+
+    public Solution getBestSolution() {
+        return bestSolution;
     }
 }
