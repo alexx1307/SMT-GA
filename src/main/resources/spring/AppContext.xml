@@ -50,14 +50,14 @@
         </property>
         <property name="mutations">
             <list>
-                <bean class="com.aleksiejew.lukasz.Algorithm.GeneticOperators.AddingRandomPointMutation"/>
+                <bean class="com.aleksiejew.lukasz.Algorithm.GeneticOperators.AddingRandomPointsMutation"/>
             </list>
         </property>
         <property name="selectionMethod" ref="nBestSelectionMethod"/>
         <property name="problem" ref="testProblem"/>
 
     </bean>
-    <bean name="nBestSelectionMethod" class="com.aleksiejew.lukasz.Algorithm.SelectionMethods.NBestSelectionMethod"/>
+    <bean name="nBestSelectionMethod" class="com.aleksiejew.lukasz.Algorithm.SelectionMethods.NBestSelection"/>
     <bean name="parameters" class="com.aleksiejew.lukasz.Algorithm.AlgorithmParameters">
         <property name="populationSize" value="100"/>
         <property name="defaultSteinerPointsNumber" value="2"/>

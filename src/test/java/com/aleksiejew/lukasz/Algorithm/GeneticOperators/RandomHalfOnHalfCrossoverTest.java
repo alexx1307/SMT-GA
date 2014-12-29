@@ -49,10 +49,10 @@ public class RandomHalfOnHalfCrossoverTest {
         RandomHalfOnHalfCrossover crossover = new RandomHalfOnHalfCrossover();
         crossover.setRandom(random);
 
-        Solution result = crossover.cross(solution1, solution2);
+        Solution[] result = crossover.cross(solution1, solution2);
 
-        Assert.assertEquals(2, result.getSteinerPoints().size());
-        Assert.assertTrue(result.getSteinerPoints().contains(point11));
-        Assert.assertTrue(result.getSteinerPoints().contains(point22));
+        Assert.assertEquals(2, result[0].getSteinerPoints().size());
+        Assert.assertTrue(result[0].getSteinerPoints().contains(point11));
+        Assert.assertTrue(result[0].getSteinerPoints().contains(point22));
     }
 }

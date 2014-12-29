@@ -2,6 +2,11 @@ package com.aleksiejew.lukasz.Algorithm.Geometry;
 
 import com.aleksiejew.lukasz.Algorithm.EuclideanMetrics;
 import com.aleksiejew.lukasz.Model.Point;
+import com.aleksiejew.lukasz.Model.Solution;
+
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Created by Luka on 2014-12-26.
@@ -9,6 +14,22 @@ import com.aleksiejew.lukasz.Model.Point;
 public class LocalOptimization {
     private static EuclideanMetrics euclid = new EuclideanMetrics();
 
+    public static Solution optimizeSolution(Solution solution){
+        SortedSet<Point> steinerPoints = new TreeSet<Point>();
+        for (Point point : solution.getSteinerPoints()) {
+            List<Point> connectedPoints = solution.getConnectedPointsInSpanningTree(point);
+            if (connectedPoints.size() == 3) {
+                steinerPoints.add(LocalOptimization.fermatPoint(
+                        connectedPoints.get(0),
+                        connectedPoints.get(1),
+                        connectedPoints.get(2)));
+            }
+            else if(connectedPoints.size()>3)
+                steinerPoints.add(point);
+        }
+        Solution newSolution = new Solution(steinerPoints,solution.getGeneticAlgorithm());
+        return newSolution;
+    }
     public static Point fermatPoint(Point a, Point b, Point c) {
         Point abEquilateralVertex = findEquilateralVertex(a, b, c);
         Point acEquilateralVertex = findEquilateralVertex(a, c, b);

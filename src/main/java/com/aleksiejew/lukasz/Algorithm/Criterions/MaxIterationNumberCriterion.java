@@ -21,9 +21,15 @@ public class MaxIterationNumberCriterion implements StopCriterion {
     }
 
     @Override
-    public boolean check(State state) {
+    public boolean checkIfFullfiled(State state) {
         int current = state.getIteration();
-        return current>maxIterationNumber;
+        return current>=maxIterationNumber;
     }
 
+    @Override
+    public String toString() {
+        return "MaxIterationNumberCriterion{" +
+                "maxIterationNumber=" + maxIterationNumber +
+                '}';
+    }
 }

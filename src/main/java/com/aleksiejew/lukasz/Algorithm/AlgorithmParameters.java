@@ -4,6 +4,7 @@ import com.aleksiejew.lukasz.Algorithm.Criterions.StopCriterion;
 import com.aleksiejew.lukasz.Algorithm.GeneticOperators.Crossover;
 import com.aleksiejew.lukasz.Algorithm.GeneticOperators.Mutation;
 import com.aleksiejew.lukasz.Algorithm.SelectionMethods.SelectionMethod;
+import com.aleksiejew.lukasz.Algorithm.SuccessionMethods.SuccessionMethod;
 import com.aleksiejew.lukasz.Generators.SolutionGenerator;
 
 import java.util.Arrays;
@@ -21,8 +22,10 @@ public class AlgorithmParameters {
     private SelectionMethod selectionMethod;
 
     private CrossoverSelectionStrategy crossoverSelectionStrategy;
+    private int levelOfLocalOptimalizationOnTheEnd;
+    private double oldPopulationPart;
 
-    public AlgorithmParameters(int populationSize, StopCriterion stopCriterion, Mutation[] mutations, Crossover[] crossovers, double[] mutationsProbability, SolutionGenerator solutionGenerator, SelectionMethod selectionMethod, CrossoverSelectionStrategy crossoverSelectionStrategy) {
+    public AlgorithmParameters(int populationSize, StopCriterion stopCriterion, Mutation[] mutations, Crossover[] crossovers, double[] mutationsProbability, SelectionMethod selectionMethod, CrossoverSelectionStrategy crossoverSelectionStrategy, int levelOfLocalOptimalizationOnTheEnd, double oldPopulationPart) {
         this.populationSize = populationSize;
         this.stopCriterion = stopCriterion;
         this.mutations = mutations;
@@ -30,12 +33,15 @@ public class AlgorithmParameters {
         this.mutationsProbability = mutationsProbability;
         this.selectionMethod = selectionMethod;
         this.crossoverSelectionStrategy = crossoverSelectionStrategy;
+        this.levelOfLocalOptimalizationOnTheEnd = levelOfLocalOptimalizationOnTheEnd;
+        this.oldPopulationPart = oldPopulationPart;
     }
 
     @Override
     public String toString() {
         return "AlgorithmParameters{" +
                 "populationSize=" + populationSize +
+                ", levelOfLocalOptimalizationOnTheEnd=" + levelOfLocalOptimalizationOnTheEnd +
                 ", stopCriterion=" + stopCriterion +
                 ", mutations=" + Arrays.toString(mutations) +
                 ", crossovers=" + Arrays.toString(crossovers) +
@@ -69,9 +75,15 @@ public class AlgorithmParameters {
         return mutations;
     }
 
-
+    public int getLevelOfLocalOptimalizationOnTheEnd() {
+        return levelOfLocalOptimalizationOnTheEnd;
+    }
 
     public StopCriterion getStopCriterion() {
         return stopCriterion;
+    }
+
+    public double getOldPopulationPart() {
+        return oldPopulationPart;
     }
 }

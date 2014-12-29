@@ -47,7 +47,7 @@ public class NBestSelectionMethodTest {
     @Test
     public void testSelectNextPopulation() throws Exception {
 
-        NBestSelectionMethod nBestSelectionMethod = new NBestSelectionMethod();
+        NBestSelection nBestSelectionMethod = new NBestSelection();
 
         Population nextGen = nBestSelectionMethod.selectNextPopulation(firstPopulation, 2);
 
@@ -61,7 +61,7 @@ public class NBestSelectionMethodTest {
 
     @Test
     public void testSelectNextPopulationWithNBiggerThenPopulationSize() throws Exception {
-        NBestSelectionMethod nBestSelectionMethod = new NBestSelectionMethod();
+        NBestSelection nBestSelectionMethod = new NBestSelection();
         childrenPopulation.setSolutions(new TreeSet<Solution>());
         Population newPopulation = nBestSelectionMethod.selectNextPopulation(firstPopulation, 4);
 

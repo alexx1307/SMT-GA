@@ -14,19 +14,11 @@ import java.util.TreeSet;
 public class TriangleOptimizationMutation implements Mutation {
     @Override
     public Solution mutate(Solution solution) {
-        SortedSet<Point> steinerPoints = new TreeSet<Point>();
-        for (Point point : solution.getSteinerPoints()) {
-            List<Point> connectedPoints = solution.getConnectedPointsInSpanningTree(point);
-            if (connectedPoints.size() == 3) {
-                steinerPoints.add(LocalOptimization.fermatPoint(
-                        connectedPoints.get(0),
-                        connectedPoints.get(1),
-                        connectedPoints.get(2)));
-            }
-            else if(connectedPoints.size()>3)
-                steinerPoints.add(point);
-        }
-        Solution newSolution = new Solution(steinerPoints,solution.getGeneticAlgorithm());
-        return newSolution;
+        return LocalOptimization.optimizeSolution(solution);
+    }
+
+    @Override
+    public String toString() {
+        return "TriangleOptimizationMutation{}" ;
     }
 }

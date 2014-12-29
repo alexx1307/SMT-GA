@@ -9,16 +9,14 @@ import java.util.*;
  * Created by Luka on 2014-11-20.
  */
 public class RandomHalfOnHalfCrossover implements Crossover {
-    private Random random = new Random();
-
+    private static Random random = new Random();
 
     public void setRandom(Random random) {
         this.random = random;
     }
 
-
     @Override
-    public Solution cross(Solution parent1, Solution parent2) {
+    public Solution[] cross(Solution parent1, Solution parent2) {
         if (!parent1.getGeneticAlgorithm().equals(parent2.getGeneticAlgorithm()))
             throw new IllegalArgumentException("Both parents should have the same genetic algorithm reference");
 
@@ -31,7 +29,7 @@ public class RandomHalfOnHalfCrossover implements Crossover {
         newSteinerPoints1.addAll(newSteinerPoints2);
 
         Solution result = new Solution(newSteinerPoints1, parent1.getGeneticAlgorithm());
-        return result;
+        return new Solution[]{result};
     }
 
     private SortedSet<Point> chooseHalfRandomly(SortedSet<Point> steinerPoints) {
@@ -46,5 +44,9 @@ public class RandomHalfOnHalfCrossover implements Crossover {
         }
 
         return newSteinerPoints;
+    }
+    @Override
+    public String toString() {
+        return "RandomHalfOnHalfCrossover{}" ;
     }
 }

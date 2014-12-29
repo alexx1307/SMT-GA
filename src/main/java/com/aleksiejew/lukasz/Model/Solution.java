@@ -47,10 +47,10 @@ public class Solution implements Comparable<Solution> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{\n");
-        stringBuilder.append("RESULT = " + evaluatedResult.getCostValue() + "\n");
-        for (Point point : steinerPoints) {
+        stringBuilder.append("RESULT = " + getEvaluatedResult().getCostValue() + "\n");
+       /* for (Point point : steinerPoints) {
             stringBuilder.append("\t" + point.toString() + "\n");
-        }
+        }*/
         stringBuilder.append("}");
         return stringBuilder.toString();
     }
@@ -66,7 +66,7 @@ public class Solution implements Comparable<Solution> {
     }
 
     public List<Point> getConnectedPointsInSpanningTree(Point point) {
-        List<ResolvedEdge> spanningTree = evaluatedResult.getSpanningTree();
+        List<ResolvedEdge> spanningTree =getEvaluatedResult().getSpanningTree();
         List<Point> connectedPoints = new LinkedList<Point>();
         for (ResolvedEdge edge : spanningTree) {
             if (edge.getP1().equals(point))

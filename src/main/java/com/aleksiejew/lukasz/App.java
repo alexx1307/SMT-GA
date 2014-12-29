@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         //ApplicationContext context = new ClassPathXmlApplicationContext("spring/AppContext.xml");
 
-        List<TestInstance> generatedTests = TestGenerator.generate(1, 1, true);
+        List<TestInstance> generatedTests = TestGenerator.generate(10, 10, true);
         for (TestInstance generatedTest : generatedTests) {
             System.out.println(generatedTest.toString());
             TestResult testResult = generatedTest.run();

@@ -7,5 +7,5 @@ import com.aleksiejew.lukasz.Model.State;
  */
 public interface StopCriterion {
     void init();
-    boolean check(State state);
+    boolean checkIfFullfiled(State state);
 }

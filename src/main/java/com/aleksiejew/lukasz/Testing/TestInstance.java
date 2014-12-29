@@ -28,8 +28,8 @@ public class TestInstance {
     @Override
     public String toString() {
         return "TestInstance{" +
-                "problem=" + problem +
-                ", parameters=" + parameters +
+                "parameters=" + parameters +
+                ", problem=" + problem +
                 '}';
     }
 }

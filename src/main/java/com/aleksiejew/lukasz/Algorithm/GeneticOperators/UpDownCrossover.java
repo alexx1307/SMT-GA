@@ -13,19 +13,27 @@ import java.util.TreeSet;
 public class UpDownCrossover implements Crossover {
     private static Random random = new Random();
     @Override
-    public Solution cross(Solution parent1, Solution parent2) {
+    public Solution[] cross(Solution parent1, Solution parent2) {
         Double limit = random.nextDouble()* parent1.getGeneticAlgorithm().getProblem().getyBorder();
-         SortedSet<Point> steinerPoints= new TreeSet<Point>();
+         SortedSet<Point> steinerPoints1= new TreeSet<Point>();
+         SortedSet<Point> steinerPoints2= new TreeSet<Point>();
         for (Point point : parent1.getSteinerPoints()) {
             if(point.y>limit)
-                steinerPoints.add(point);
+                steinerPoints1.add(point);
+            else steinerPoints2.add(point);
         }
         for (Point point : parent2.getSteinerPoints()) {
             if(point.y<limit)
-                steinerPoints.add(point);
+                steinerPoints1.add(point);
+            else steinerPoints2.add(point);
         }
-        return new Solution(steinerPoints,parent1.getGeneticAlgorithm());
+        return new Solution[]{new Solution(steinerPoints1,parent1.getGeneticAlgorithm()),new Solution(steinerPoints2,parent1.getGeneticAlgorithm())};
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "UpDownCrossover{}" ;
     }
 }

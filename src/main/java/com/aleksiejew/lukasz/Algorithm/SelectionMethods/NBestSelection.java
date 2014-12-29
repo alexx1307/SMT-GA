@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * Created by Luka on 2014-11-20.
  */
-public class NBestSelectionMethod implements SelectionMethod {
+public class NBestSelection implements SelectionMethod {
 
     @Override
     public Population selectNextPopulation(Population oldPopulation, int newPopulationSize) {

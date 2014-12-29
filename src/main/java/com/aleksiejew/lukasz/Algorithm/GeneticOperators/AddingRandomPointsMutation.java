@@ -9,8 +9,14 @@ import java.util.*;
 /**
  * Created by Luka on 2014-12-19.
  */
-public class AddingRandomPointMutation implements Mutation {
+public class AddingRandomPointsMutation implements Mutation {
     static Random random = new Random();
+    int pointsNumber;
+
+    public AddingRandomPointsMutation(int pointsNumber){
+        this.pointsNumber = pointsNumber;
+    }
+
     @Override
     public Solution mutate(Solution solution) {
         Double xBorder = solution.getGeneticAlgorithm().getProblem().getxBorder();
@@ -19,5 +25,9 @@ public class AddingRandomPointMutation implements Mutation {
         newListOfPoints.add(new Point(random.nextDouble()*xBorder,random.nextDouble()*yBorder));
         Solution result = new Solution(newListOfPoints,solution.getGeneticAlgorithm());
         return result;
+    }
+    @Override
+    public String toString() {
+        return "AddingRandomPointMutation{}" ;
     }
 }
